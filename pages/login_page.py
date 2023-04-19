@@ -5,8 +5,8 @@ LOGIN_URL = "https://selenium1py.pythonanywhere.com/accounts/login/"
 
 class LoginPage(BasePage):
 
-    def __init__(self, browser):
-        super().__init__(browser, LOGIN_URL)
+    def __init__(self, browser, url = LOGIN_URL):
+        super().__init__(browser, url)
         self.login_name = "login"
 
     def should_be_login_page(self):
