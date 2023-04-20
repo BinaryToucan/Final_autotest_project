@@ -14,22 +14,28 @@ class ProductPage(BasePage):
         button = self.browser.find_element(*ProductPageLocators.ADD_BUTTON)
         button.click()
         super().solve_quiz_and_get_code()
-        self.should_be_message_adding_product()
-        self.should_be_message_price_basket()
 
-    def should_be_message_adding_product(self):
+    def is_message_adding_product_exist(self):
         message = WebDriverWait(self.browser, self.timeout).until(
             EC.presence_of_element_located(ProductPageLocators.ADDING_MESSAGE)
         )
         message = message.text
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
-        assert product_name == message, "Product name is not in view"
+        return product_name == message
 
-    def should_be_message_price_basket(self):
+    def is_message_price_basket_exist(self):
         message = WebDriverWait(self.browser, self.timeout).until(
             EC.presence_of_element_located(ProductPageLocators.ADDING_TO_BASKET)
         )
         message = message.text
         price = self.browser.find_element(*ProductPageLocators.PRICE_PRODUCT).text
-        assert price in message, "Price is not in view"
+        return price in message
     
+    def should_be_message_adding_product_and_price(self):
+        assert self.is_message_adding_product_exist() and self.is_message_price_basket_exist()
+
+    def should_be_not_present_message_adding_product(self):
+        assert self.is_not_element_present(*ProductPageLocators.ADDING_MESSAGE), "Adding message exist"
+
+    def should_be_disappeared_message_adding_product(self):
+        assert self.is_disappeared(*ProductPageLocators.ADDING_MESSAGE), "Adding message not remove after 4 sec"
