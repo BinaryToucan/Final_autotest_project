@@ -23,3 +23,15 @@ class LoginPage(BasePage):
 
     def should_be_register_form(self):
         assert self.is_element_present(*LoginPageLocators.REGISTER_FORM), "Register form is not presented"
+
+    def register_new_user(self, email, password):
+        self.add_text_to_form(*LoginPageLocators.REGISTER_EMAIL_ID, email, "Email form is not exist")
+        self.add_text_to_form(*LoginPageLocators.REGISTER_PASSWORD1_ID, password, "Password1 form is not exist")
+        self.add_text_to_form(*LoginPageLocators.REGISTER_PASSWORD2_ID, password, "Password2 form is not exist")
+
+    def add_text_to_form(self, locator, input_message, error):
+        if(self.is_element_present(locator)):
+            link = self.browser.find_element(locator)
+            link.send_keys(input_message)
+        else:
+            assert False, error

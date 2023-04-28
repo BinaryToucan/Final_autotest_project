@@ -1,9 +1,8 @@
-from .base_page import BasePage
 from .locators import ProductPageLocators
 from selenium.webdriver.common.by import By
 from .locators import BasketPageLocators
+from .base_page import BasePage
 
-EMPTY_TEXT = " Ваша корзина пуста "
 class BasketPage(BasePage):
 
     def __init__(self, browser, url, timeout = 20):
